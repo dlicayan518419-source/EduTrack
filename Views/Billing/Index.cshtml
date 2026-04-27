@@ -1,0 +1,82 @@
+﻿@{
+    ViewData["Title"] = "Billing Management";
+    var billings = Model as IEnumerable<dynamic> ?? new List<dynamic>();
+}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0"><i class="fas fa-coins me-2"></i>Billing Management</h4>
+            <a asp-action="Create" class="btn btn-light btn-sm">
+                <i class="fas fa-plus me-1"></i> Add Bill
+            </a>
+        </div>
+        <div class="card-body">
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success">@TempData["Success"]</div>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">@TempData["Error"]</div>
+            }
+
+            <div class="table-container">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>School Year</th>
+                            <th>Fee Type</th>
+                            <th>Amount</th>
+                            <th>Paid</th>
+                            <th>Balance</th>
+                            <th>Due Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (billings != null && billings.Any())
+                        {
+                            foreach (var billing in billings)
+                            {
+                                <tr>
+                                    <td>@billing.StudentName</td>
+                                    <td>@billing.SchoolYear</td>
+                                    <td>@billing.FeeType</td>
+                                    <td>₱@billing.Amount.ToString("N2")</td>
+                                    <td>₱@billing.TotalPaid.ToString("N2")</td>
+                                    <td>
+                                        @if (billing.Balance > 0)
+                                        {
+                                            <span class="badge bg-danger">₱@billing.Balance.ToString("N2")</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-success">Paid</span>
+                                        }
+                                    </td>
+                                    <td>@billing.DueDate.ToString("yyyy-MM-dd")</td>
+                                    <td>
+                                        @if (billing.Balance > 0)
+                                        {
+                                            <a asp-action="MakePayment" asp-route-id="@billing.BillingID" class="btn btn-sm btn-primary">
+                                                <i class="fas fa-money-bill me-1"></i> Pay
+                                            </a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="8" class="text-center">No billing records found.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

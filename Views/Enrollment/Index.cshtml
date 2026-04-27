@@ -1,0 +1,41 @@
+﻿@model IEnumerable<EduTrack.Models.Enrollment>
+
+@{
+    ViewData["Title"] = "Enrollments";
+}
+
+<div class="container mt-4">
+    <h2>Enrollment Management</h2>
+    <p>
+        <a asp-action="Create" class="btn btn-primary">New Enrollment</a>
+    </p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Grade Level</th>
+                <th>Section</th>
+                <th>School Year</th>
+                <th>Status</th>
+                <th>Classification</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var enrollment in Model)
+            {
+                <tr>
+                    <td>@enrollment.Student?.FirstName @enrollment.Student?.LastName</td>
+                    <td>@enrollment.Section?.GradeLevel?.GradeName</td>
+                    <td>@enrollment.Section?.SectionName</td>
+                    <td>@enrollment.SchoolYear</td>
+                    <td>@enrollment.Status</td>
+                    <td>@enrollment.Classification?.ClassificationName</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@enrollment.EnrollmentID" class="btn btn-warning btn-sm">Update</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

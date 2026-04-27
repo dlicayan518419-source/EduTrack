@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EduTrack - Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-logo">
+                <img src="~/images/LogoIt15.png" alt="EduTrack Logo" onerror="this.src='https://via.placeholder.com/70x70?text=EduTrack'" />
+                <h3>EduTrack</h3>
+                <p>Elementary School Management System</p>
+            </div>
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-circle me-2"></i> @ViewBag.Error
+                </div>
+            }
+
+            <form method="post">
+                <div class="mb-3">
+                    <label for="username" class="form-label">
+                        <i class="fas fa-user me-2"></i>Username
+                    </label>
+                    <input type="text" name="username" id="username" class="form-control" placeholder="Enter your username" required />
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">
+                        <i class="fas fa-lock me-2"></i>Password
+                    </label>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" required />
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-sign-in-alt me-2"></i>Login
+                </button>
+            </form>
+
+            <hr class="my-4" />
+
+            <div class="text-center">
+                <small class="text-muted">
+                    <i class="fas fa-graduation-cap me-1"></i> EduTrack v1.0
+                </small>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

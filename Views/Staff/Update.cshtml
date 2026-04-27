@@ -1,0 +1,47 @@
+﻿@model EduTrack.Models.Staff
+
+@{
+    ViewData["Title"] = "Update Staff";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-user-edit me-2"></i>Update Staff</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Update">
+                        <input type="hidden" asp-for="StaffID" />
+                        <div class="mb-3">
+                            <label asp-for="FirstName" class="form-label">First Name</label>
+                            <input asp-for="FirstName" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="LastName" class="form-label">Last Name</label>
+                            <input asp-for="LastName" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="StaffRole" class="form-label">Role</label>
+                            <select asp-for="StaffRole" class="form-select">
+                                <option value="Teacher">Teacher</option>
+                                <option value="Guidance">Guidance</option>
+                                <option value="Nurse">Nurse</option>
+                                <option value="Accountant">Accountant</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="HireDate" class="form-label">Hire Date</label>
+                            <input asp-for="HireDate" type="date" class="form-control" />
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary">Back</a>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

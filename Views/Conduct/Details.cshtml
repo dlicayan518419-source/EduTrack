@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Conduct Record Details";
+    var record = Model as dynamic;
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-file-alt me-2"></i>Conduct Record Details</h4>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Date Recorded</dt>
+                        <dd class="col-sm-8">@record?.Date.ToString("yyyy-MM-dd HH:mm")</dd>
+
+                        <dt class="col-sm-4">Student</dt>
+                        <dd class="col-sm-8">@record?.StudentName</dd>
+
+                        <dt class="col-sm-4">Behavior Type</dt>
+                        <dd class="col-sm-8">
+                            @if (record?.Type == "Positive")
+                            {
+                                <span class="badge bg-success">Positive</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Negative</span>
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4">Description</dt>
+                        <dd class="col-sm-8">@record?.Description</dd>
+
+                        <dt class="col-sm-4">Action Taken</dt>
+                        <dd class="col-sm-8">@(string.IsNullOrEmpty(record?.ActionTaken) ? "None" : record.ActionTaken)</dd>
+
+                        <dt class="col-sm-4">Recorded By</dt>
+                        <dd class="col-sm-8">@record?.RecorderName (@record?.RecorderRole)</dd>
+                    </dl>
+
+                    <div class="d-flex justify-content-between mt-3">
+                        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                        <a asp-action="Create" class="btn btn-primary">Add New Record</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

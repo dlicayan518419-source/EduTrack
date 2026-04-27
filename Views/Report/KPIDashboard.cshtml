@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "KPI Dashboard";
+}
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="fas fa-chart-line me-2"></i>KPI Monitoring & Analytics</h3>
+                    <small>Key Performance Indicators Dashboard</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="stat-card blue">
+                <div class="stat-title">Retention Rate</div>
+                <div class="stat-value">@ViewBag.RetentionRate%</div>
+                <small>Year over Year</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card green">
+                <div class="stat-title">Attendance Rate</div>
+                <div class="stat-value">@ViewBag.AttendanceRate%</div>
+                <small>Overall Average</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card orange">
+                <div class="stat-title">Academic Performance</div>
+                <div class="stat-value">@ViewBag.AcademicPerformance%</div>
+                <small>Average Grade</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card teal">
+                <div class="stat-title">Collection Efficiency</div>
+                <div class="stat-value">@ViewBag.CollectionEfficiency%</div>
+                <small>Fee Collection</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">KPI Definitions</h5>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li><strong>Retention Rate:</strong> Percentage of students who continued from previous school year</li>
+                        <li><strong>Attendance Rate:</strong> Percentage of students with regular attendance</li>
+                        <li><strong>Academic Performance:</strong> Overall average grade across all students</li>
+                        <li><strong>Collection Efficiency:</strong> Percentage of fees collected vs total billings</li>
+                    </ul>
+                    <a asp-action="ExecutiveSummary" class="btn btn-primary mt-3">Back to Executive Summary</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

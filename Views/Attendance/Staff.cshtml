@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Staff Attendance";
+    var today = ViewBag.Today as DateTime? ?? DateTime.Today;
+    var allStaff = ViewBag.AllStaff as IEnumerable<dynamic> ?? new List<dynamic>();
+    var attendances = ViewBag.Attendances as List<EduTrack.Models.AttendanceStaff> ?? new List<EduTrack.Models.AttendanceStaff>();
+}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0"><i class="fas fa-clock me-2"></i>Staff Attendance - @today.ToString("MMMM dd, yyyy")</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-container">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Staff Name</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Time In</th>
+                            <th>Time Out</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var staff in allStaff)
+                        {
+                            var attendance = attendances.FirstOrDefault(a => a.StaffID == staff.StaffID);
+                            <tr>
+                                <td>@staff.FullName</td>
+                                <td>@staff.StaffRole</td>
+                                <td>
+                                    <select name="status_@staff.StaffID" class="form-select" id="status_@staff.StaffID">
+                                        <option value="Present" selected="@(attendance?.Status == "Present")">Present</option>
+                                        <option value="Absent" selected="@(attendance?.Status == "Absent")">Absent</option>
+                                        <option value="Late" selected="@(attendance?.Status == "Late")">Late</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="time" name="timeIn_@staff.StaffID" id="timeIn_@staff.StaffID" class="form-control" value="@(attendance?.TimeIn.ToString())" />
+                                </td>
+                                <td>
+                                    <input type="time" name="timeOut_@staff.StaffID" id="timeOut_@staff.StaffID" class="form-control" value="@(attendance?.TimeOut.ToString())" />
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-primary" onclick="saveStaffAttendance(@staff.StaffID)">
+                                        <i class="fas fa-save me-1"></i> Save
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <a asp-action="Staff" class="btn btn-secondary mt-3">Refresh</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function saveStaffAttendance(staffId) {
+            var status = document.getElementById('status_' + staffId).value;
+            var timeIn = document.getElementById('timeIn_' + staffId).value;
+            var timeOut = document.getElementById('timeOut_' + staffId).value;
+            
+            window.location.href = '@Url.Action("RecordStaff", "Attendance")?staffId=' + staffId + '&status=' + encodeURIComponent(status) + '&timeIn=' + encodeURIComponent(timeIn) + '&timeOut=' + encodeURIComponent(timeOut);
+        }
+    </script>
+}

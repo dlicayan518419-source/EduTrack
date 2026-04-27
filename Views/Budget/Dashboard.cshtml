@@ -1,0 +1,127 @@
+﻿@{
+    ViewData["Title"] = "Budget Dashboard";
+}
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="fas fa-chart-line me-2"></i>Budget Dashboard</h3>
+                    <small>School Budget Monitoring</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="stat-card blue">
+                <div class="stat-title">Total Income</div>
+                <div class="stat-value">₱@ViewBag.TotalIncome</div>
+                <small>All Sources</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card green">
+                <div class="stat-title">Student Payments</div>
+                <div class="stat-value">₱@ViewBag.StudentPayments</div>
+                <small>Tuition & Fees</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card info">
+                <div class="stat-title">External Income</div>
+                <div class="stat-value">₱@ViewBag.ExternalIncome</div>
+                <small>Donations, DepEd, etc.</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card orange">
+                <div class="stat-title">Total Expenses</div>
+                <div class="stat-value">₱@ViewBag.TotalExpenses</div>
+                <small>Spent to Date</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="stat-card teal">
+                <div class="stat-title">Remaining Budget</div>
+                <div class="stat-value">₱@ViewBag.RemainingBudget</div>
+                <small>@ViewBag.BudgetUtilization% Utilized</small>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5>Income Breakdown</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="incomeChart" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header bg-primary text-white">
+                    <h5>Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <a asp-action="CreateExpense" class="btn btn-danger w-100 mb-2">
+                        <i class="fas fa-minus-circle me-2"></i>Add Expense
+                    </a>
+                    <a asp-action="CreateIncome" class="btn btn-success w-100 mb-2">
+                        <i class="fas fa-plus-circle me-2"></i>Add External Income
+                    </a>
+                    <a asp-action="BudgetReport" class="btn btn-info w-100">
+                        <i class="fas fa-chart-bar me-2"></i>View Budget Report
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header bg-primary text-white">
+                    <h5>Navigation</h5>
+                </div>
+                <div class="card-body">
+                    <a asp-action="Expenses" class="btn btn-outline-danger w-100 mb-2">
+                        <i class="fas fa-list me-2"></i>View All Expenses
+                    </a>
+                    <a asp-action="Income" class="btn btn-outline-success w-100">
+                        <i class="fas fa-list me-2"></i>View All Income
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('incomeChart').getContext('2d');
+        var incomeChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+        labels: ['Student Payments', 'External Income'],
+        datasets: [{
+        data: [@ViewBag.StudentPayments.Replace(",", ""), @ViewBag.ExternalIncome.Replace(",", "")],
+        backgroundColor: ['#28a745', '#17a2b8'],
+        borderWidth: 0
+        }]
+        },
+        options: {
+        responsive: true,
+        plugins: {
+        legend: { position: 'bottom' }
+        }
+        }
+        });
+    </script>
+}

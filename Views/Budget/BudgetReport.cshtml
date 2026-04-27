@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "Budget Report";
+    var monthlyExpenses = ViewBag.MonthlyExpenses as IEnumerable<dynamic> ?? new List<dynamic>();
+    var monthlyIncome = ViewBag.MonthlyIncome as IEnumerable<dynamic> ?? new List<dynamic>();
+    var byCategory = ViewBag.ByCategory as IEnumerable<dynamic> ?? new List<dynamic>();
+}
+
+<div class="container">
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Budget Utilization Report</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Monthly Expenses</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Year</th>
+                                    <th>Month</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (monthlyExpenses.Any())
+                                {
+                                    foreach (var item in monthlyExpenses)
+                                    {
+                                        <tr>
+                                            <td>@item.Year</td>
+                                            <td>@item.MonthName</td>
+                                            <td><span class="text-danger">₱@item.Total.ToString("N2")</span></td>
+                                         </tr>
+                                    }
+                                }
+                                else
+                                {
+                                     <tr>
+                                         <td colspan="3" class="text-center">No expense data available.</td>
+                                     </tr>
+                                }
+                            </tbody>
+                         </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h5>Monthly Income</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Year</th>
+                                    <th>Month</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (monthlyIncome.Any())
+                                {
+                                    foreach (var item in monthlyIncome)
+                                    {
+                                        <tr>
+                                            <td>@item.Year</td>
+                                            <td>@item.MonthName</td>
+                                            <td><span class="text-success">₱@item.Total.ToString("N2")</span></td>
+                                         </tr>
+                                    }
+                                }
+                                else
+                                {
+                                     <tr>
+                                         <td colspan="3" class="text-center">No income data available.</td>
+                                     </tr>
+                                }
+                            </tbody>
+                         </table>
+                    </div>
+                </div>
+            </div>
+
+            <h5 class="mt-4">Expenses by Category</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (byCategory.Any())
+                        {
+                            foreach (var item in byCategory)
+                            {
+                                <tr>
+                                    <td>@item.Category</td>
+                                    <td>₱@item.Total.ToString("N2")</td>
+                                 </tr>
+                            }
+                        }
+                        else
+                        {
+                             <tr>
+                                 <td colspan="2" class="text-center">No category data available.</td>
+                             </tr>
+                        }
+                    </tbody>
+                 </table>
+            </div>
+
+            <a asp-action="Dashboard" class="btn btn-secondary mt-3">Back to Dashboard</a>
+        </div>
+    </div>
+</div>

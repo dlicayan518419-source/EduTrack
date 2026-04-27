@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "View Grades";
+    var grades = Model as IEnumerable<dynamic> ?? new List<dynamic>();
+}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0"><i class="fas fa-chart-line me-2"></i>Student Grades</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-container">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Subject</th>
+                            <th>Grade Level</th>
+                            <th>Section</th>
+                            <th>Quarter</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (grades != null && grades.Any())
+                        {
+                            foreach (var grade in grades)
+                            {
+                                <tr>
+                                    <td>@grade.StudentName</td>
+                                    <td>@grade.SubjectName</td>
+                                    <td>@grade.GradeLevel</td>
+                                    <td>@grade.SectionName</td>
+                                    <td>@grade.Grade.Quarter</td>
+                                    <td>
+                                        @{
+                                            var score = grade.Grade.Score;
+                                            if (score != null && score > 0)
+                                            {
+                                                <span class="badge bg-success">@score.ToString("0.00")</span>
+                                            }
+                                            else if (score == 0)
+                                            {
+                                                <span class="badge bg-warning">0.00</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary">Not graded</span>
+                                            }
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center">No grades found.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

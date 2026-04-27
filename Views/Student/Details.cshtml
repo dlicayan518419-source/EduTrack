@@ -1,0 +1,54 @@
+﻿@model EduTrack.Models.Student
+
+@{
+    ViewData["Title"] = "Student Details";
+}
+
+<div class="container mt-4">
+    <h2>Student Details</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">@Model.FirstName @Model.LastName</h5>
+            <dl class="row">
+                <dt class="col-sm-3">Student ID</dt>
+                <dd class="col-sm-9">@Model.StudentID</dd>
+                
+                <dt class="col-sm-3">Date of Birth</dt>
+                <dd class="col-sm-9">@(Model.DateOfBirth?.ToString("yyyy-MM-dd") ?? "N/A")</dd>
+                
+                <dt class="col-sm-3">Gender</dt>
+                <dd class="col-sm-9">@Model.Gender</dd>
+                
+                <dt class="col-sm-3">Address</dt>
+                <dd class="col-sm-9">@Model.Address</dd>
+                
+                <dt class="col-sm-3">Status</dt>
+                <dd class="col-sm-9">@Model.Status</dd>
+            </dl>
+            
+            <h4>Enrollment History</h4>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>School Year</th>
+                        <th>Grade Level</th>
+                        <th>Section</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var enrollment in Model.Enrollments)
+                    {
+                        <tr>
+                            <td>@enrollment.SchoolYear</td>
+                            <td>@enrollment.Section?.GradeLevel?.GradeName</td>
+                            <td>@enrollment.Section?.SectionName</td>
+                            <td>@enrollment.Status</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>
+</div>

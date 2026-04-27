@@ -1,0 +1,56 @@
+﻿@model EduTrack.Models.HealthRecord
+
+@{
+    ViewData["Title"] = "Add Health Record";
+    var students = ViewBag.Students as List<EduTrack.Models.Student>;
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Add Health Record</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create">
+                        <div class="mb-3">
+                            <label asp-for="StudentID" class="form-label">Student</label>
+                            <select asp-for="StudentID" class="form-select" required>
+                                <option value="">Select Student</option>
+                                @foreach (var student in students)
+                                {
+                                    <option value="@student.StudentID">@student.FirstName @student.LastName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="VisitType" class="form-label">Visit Type</label>
+                            <select asp-for="VisitType" class="form-select" required>
+                                <option value="Clinic Visit">Clinic Visit</option>
+                                <option value="Immunization">Immunization</option>
+                                <option value="Physical Exam">Physical Exam</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">Description</label>
+                            <textarea asp-for="Description" class="form-control" rows="3" placeholder="Describe the visit or concern..."></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Diagnosis" class="form-label">Diagnosis / Findings</label>
+                            <input asp-for="Diagnosis" class="form-control" placeholder="e.g., Mild fever, Normal, etc." />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="FollowUp" class="form-label">Follow Up Instructions</label>
+                            <textarea asp-for="FollowUp" class="form-control" rows="2" placeholder="e.g., Return in 1 week, Take medication, etc."></textarea>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary">Back</a>
+                            <button type="submit" class="btn btn-primary">Save Record</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

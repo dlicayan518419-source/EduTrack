@@ -1,0 +1,136 @@
+﻿@{
+    ViewData["Title"] = "Executive Dashboard";
+}
+
+<div class="container">
+    <h2 class="mb-4"><i class="fas fa-chart-pie me-2"></i>Executive Dashboard</h2>
+
+    <!-- Student Statistics -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="fas fa-user-graduate me-2"></i>Student Statistics</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="stat-card blue">
+                        <div class="stat-title">Total Students</div>
+                        <div class="stat-value">@ViewBag.TotalStudents</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card green">
+                        <div class="stat-title">Enrolled</div>
+                        <div class="stat-value">@ViewBag.EnrolledStudents</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card orange">
+                        <div class="stat-title">Graduated</div>
+                        <div class="stat-value">@ViewBag.GraduatedStudents</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card teal">
+                        <div class="stat-title">Transferred</div>
+                        <div class="stat-value">@ViewBag.TransferredStudents</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Academic Statistics -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Academic Performance</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="stat-card blue">
+                        <div class="stat-title">Average Grade</div>
+                        <div class="stat-value">@ViewBag.AverageGrade</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="stat-card green">
+                        <div class="stat-title">Passing Rate</div>
+                        <div class="stat-value">@ViewBag.PassingRate%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attendance Statistics -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="fas fa-calendar-check me-2"></i>Today's Attendance</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="stat-card green">
+                        <div class="stat-title">Present</div>
+                        <div class="stat-value">@ViewBag.TodayPresent</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card orange">
+                        <div class="stat-title">Late</div>
+                        <div class="stat-value">@ViewBag.TodayLate</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card red">
+                        <div class="stat-title">Absent</div>
+                        <div class="stat-value">@ViewBag.TodayAbsent</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Statistics -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="fas fa-coins me-2"></i>Financial Summary</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="stat-card teal">
+                        <div class="stat-title">Total Collections</div>
+                        <div class="stat-value">₱@ViewBag.TotalCollections</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="stat-card orange">
+                        <div class="stat-title">Outstanding Balance</div>
+                        <div class="stat-value">₱@ViewBag.OutstandingBalance</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <a asp-action="StudentPerformance" class="btn btn-primary w-100">
+                <i class="fas fa-chart-bar me-2"></i>View Student Performance Report
+            </a>
+        </div>
+        <div class="col-md-6">
+            <a asp-action="FinancialSummary" class="btn btn-info w-100 text-white">
+                <i class="fas fa-chart-line me-2"></i>View Financial Summary
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .stat-card.red {
+        background: linear-gradient(135deg, #dc3545, #b02a37);
+    }
+</style>

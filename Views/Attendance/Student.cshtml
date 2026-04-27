@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Student Attendance";
+    var today = ViewBag.Today as DateTime? ?? DateTime.Today;
+    var allStudents = ViewBag.AllStudents as IEnumerable<dynamic> ?? new List<dynamic>();
+    var attendances = ViewBag.Attendances as List<EduTrack.Models.AttendanceStudent> ?? new List<EduTrack.Models.AttendanceStudent>();
+}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0"><i class="fas fa-calendar-check me-2"></i>Student Attendance - @today.ToString("MMMM dd, yyyy")</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-container">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Status</th>
+                            <th>Remarks</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var student in allStudents)
+                        {
+                            var attendance = attendances.FirstOrDefault(a => a.StudentID == student.StudentID);
+                            <tr>
+                                <td>@student.FullName</td>
+                                <td>
+                                    <select name="status_@student.StudentID" class="form-select" id="status_@student.StudentID">
+                                        <option value="Present" selected="@(attendance?.Status == "Present")">Present</option>
+                                        <option value="Absent" selected="@(attendance?.Status == "Absent")">Absent</option>
+                                        <option value="Late" selected="@(attendance?.Status == "Late")">Late</option>
+                                        <option value="Excused" selected="@(attendance?.Status == "Excused")">Excused</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" name="remarks_@student.StudentID" id="remarks_@student.StudentID" class="form-control" value="@(attendance?.Remarks ?? "")" />
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-primary" onclick="saveAttendance(@student.StudentID)">
+                                        <i class="fas fa-save me-1"></i> Save
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <a asp-action="Student" class="btn btn-secondary mt-3">Refresh</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function saveAttendance(studentId) {
+            var status = document.getElementById('status_' + studentId).value;
+            var remarks = document.getElementById('remarks_' + studentId).value;
+            
+            window.location.href = '@Url.Action("RecordStudent", "Attendance")?studentId=' + studentId + '&status=' + encodeURIComponent(status) + '&remarks=' + encodeURIComponent(remarks);
+        }
+    </script>
+}

@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container mt-4">
+    <h2>Admin Dashboard</h2>
+    <div class="row mt-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">User Management</h5>
+                    <a href="@Url.Action("Users")" class="btn btn-light">Manage Users</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Grade Levels</h5>
+                    <a href="@Url.Action("GradeLevels")" class="btn btn-light">Manage</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Sections</h5>
+                    <a href="@Url.Action("Sections")" class="btn btn-light">Manage</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Subjects</h5>
+                    <a href="@Url.Action("Subjects")" class="btn btn-light">Manage</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">System Logs</h5>
+                    <a href="@Url.Action("SystemLogs")" class="btn btn-light">View Logs</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

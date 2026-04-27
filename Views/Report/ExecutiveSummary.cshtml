@@ -1,0 +1,196 @@
+﻿@{
+    ViewData["Title"] = "Executive Summary";
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="fas fa-chart-line me-2"></i>Executive Summary Dashboard</h3>
+                    <small>Real-time School Management Information System</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="stat-card blue">
+                <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
+                <div class="stat-title">Total Enrollment</div>
+                <div class="stat-value">@ViewBag.TotalEnrollment</div>
+                <small>Current School Year</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card green">
+                <div class="stat-icon"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="stat-title">Faculty Count</div>
+                <div class="stat-value">@ViewBag.TotalFaculty</div>
+                <small>Active Teachers</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card orange">
+                <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="stat-title">Passing Rate</div>
+                <div class="stat-value">@ViewBag.PassingRate%</div>
+                <small>Overall Average</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card teal">
+                <div class="stat-icon"><i class="fas fa-coins"></i></div>
+                <div class="stat-title">Collection Rate</div>
+                <div class="stat-value">@ViewBag.CollectionRate%</div>
+                <small>Fee Collection</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Enrollment Trends by Grade Level</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="enrollmentChart" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Monthly Financial Collection</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="financialChart" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance Tables Row -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Top Performing Students</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Student Name</th>
+                                <th>Average</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.TopStudents != null)
+                            {
+                                foreach (var student in ViewBag.TopStudents)
+                                {
+                                    <tr>
+                                        <td>@student.Rank</td>
+                                        <td>@student.StudentName</td>
+                                        <td>@student.Average%</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="3" class="text-center">No data available</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Attendance Summary</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="attendanceChart" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Enrollment by Grade Level Chart
+        var ctx1 = document.getElementById('enrollmentChart').getContext('2d');
+        var enrollmentChart = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+        labels: @Html.Raw(ViewBag.GradeLabels),
+        datasets: [{
+        label: 'Number of Students',
+        data: @Html.Raw(ViewBag.EnrollmentData),
+        backgroundColor: '#2c7da0',
+        borderRadius: 5
+        }]
+        },
+        options: {
+        responsive: true,
+        plugins: {
+        legend: { position: 'top' }
+        }
+        }
+        });
+
+        // Financial Chart
+        var ctx2 = document.getElementById('financialChart').getContext('2d');
+        var financialChart = new Chart(ctx2, {
+        type: 'line',
+        data: {
+        labels: @Html.Raw(ViewBag.MonthLabels),
+        datasets: [{
+        label: 'Collections (₱)',
+        data: @Html.Raw(ViewBag.MonthlyCollections),
+        borderColor: '#28a745',
+        backgroundColor: 'rgba(40,167,69,0.1)',
+        tension: 0.3,
+        fill: true
+        }]
+        },
+        options: {
+        responsive: true,
+        plugins: {
+        legend: { position: 'top' }
+        }
+        }
+        });
+
+        // Attendance Chart
+        var ctx3 = document.getElementById('attendanceChart').getContext('2d');
+        var attendanceChart = new Chart(ctx3, {
+        type: 'doughnut',
+        data: {
+        labels: ['Present', 'Absent', 'Late'],
+        datasets: [{
+        data: [@ViewBag.PresentCount, @ViewBag.AbsentCount, @ViewBag.LateCount],
+        backgroundColor: ['#28a745', '#dc3545', '#ffc107'],
+        borderWidth: 0
+        }]
+        },
+        options: {
+        responsive: true,
+        plugins: {
+        legend: { position: 'bottom' }
+        }
+        }
+        });
+    </script>
+}

@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Enter Grades";
+    var classes = ViewBag.Classes as IEnumerable<dynamic> ?? new List<dynamic>();
+}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0"><i class="fas fa-chalkboard me-2"></i>Select Class to Enter Grades</h4>
+        </div>
+        <div class="card-body">
+            @if (classes != null && classes.Any())
+            {
+                <div class="row">
+                    @foreach (var classItem in classes)
+                    {
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">@classItem.SubjectName</h5>
+                                    <p class="card-text">
+                                        <strong>Grade:</strong> @classItem.GradeName<br />
+                                        <strong>Section:</strong> @classItem.SectionName
+                                    </p>
+                                    <label class="form-label">Quarter:</label>
+                                    <select id="quarter_@classItem.ClassID" class="form-select mb-2">
+                                        <option value="1">1st Quarter</option>
+                                        <option value="2">2nd Quarter</option>
+                                        <option value="3">3rd Quarter</option>
+                                        <option value="4">4th Quarter</option>
+                                    </select>
+                                    <button class="btn btn-primary w-100" onclick="enterGrades(@classItem.ClassID, document.getElementById('quarter_' + @classItem.ClassID).value)">
+                                        <i class="fas fa-edit me-1"></i> Enter Grades
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i> No classes assigned to you.
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function enterGrades(classId, quarter) {
+            window.location.href = '@Url.Action("ClassStudents", "Grade")?classId=' + classId + '&quarter=' + quarter;
+        }
+    </script>
+}

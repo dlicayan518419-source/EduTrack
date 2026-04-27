@@ -1,0 +1,30 @@
+﻿@model EduTrack.Models.Student
+
+@{
+    ViewData["Title"] = "Archive Student";
+}
+
+<div class="container mt-4">
+    <h2>Archive Student</h2>
+    <div class="alert alert-warning">
+        Are you sure you want to archive this student? This will change their status to "Transferred".
+    </div>
+    <dl class="row">
+        <dt class="col-sm-2">Student ID</dt>
+        <dd class="col-sm-10">@Model.StudentID</dd>
+
+        <dt class="col-sm-2">Name</dt>
+        <dd class="col-sm-10">@Model.FirstName @Model.LastName</dd>
+
+        <dt class="col-sm-2">Gender</dt>
+        <dd class="col-sm-10">@Model.Gender</dd>
+
+        <dt class="col-sm-2">Current Status</dt>
+        <dd class="col-sm-10">@Model.Status</dd>
+    </dl>
+    <form asp-action="Archive">
+        <input type="hidden" asp-for="StudentID" />
+        <button type="submit" class="btn btn-warning">Archive</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

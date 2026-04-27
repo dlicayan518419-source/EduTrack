@@ -1,0 +1,41 @@
+# Visual Studio
+bin/
+obj/
+.vs/
+.vscode/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+
+# Database files
+*.mdf
+*.ldf
+*.db
+*.sqlite
+
+# Logs
+*.log
+logs/
+
+# Node modules
+node_modules/
+
+# Publish
+out/
+publish/
+
+# Connection strings (important!)
+appsettings.json - but keep the template version

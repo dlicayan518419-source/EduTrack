@@ -1,0 +1,70 @@
+﻿@model IEnumerable<EduTrack.Models.Student>
+
+@{
+    ViewData["Title"] = "Students";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="fas fa-user-graduate me-2"></i>Student Management</h2>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus me-1"></i> Add New Student
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Gender</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var student in Model)
+                    {
+                        <tr>
+                            <td>@student.StudentID</td>
+                            <td>@student.FirstName</td>
+                            <td>@student.LastName</td>
+                            <td>@student.Gender</td>
+                            <td>
+                                @if (student.Status == "Enrolled")
+                                {
+                                    <span class="badge bg-success">Enrolled</span>
+                                }
+                                else if (student.Status == "Graduated")
+                                {
+                                    <span class="badge bg-info">Graduated</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Transferred</span>
+                                }
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@student.StudentID" class="btn btn-sm btn-outline-primary me-1">
+                                    <i class="fas fa-eye"></i> Details
+                                </a>
+                                <a asp-action="Update" asp-route-id="@student.StudentID" class="btn btn-sm btn-outline-warning me-1">
+                                    <i class="fas fa-edit"></i> Update
+                                </a>
+                                @if (student.Status != "Transferred" && student.Status != "Graduated")
+                                {
+                                    <a asp-action="Archive" asp-route-id="@student.StudentID" class="btn btn-sm btn-outline-secondary">
+                                        <i class="fas fa-archive"></i> Archive
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

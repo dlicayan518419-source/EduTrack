@@ -1,0 +1,58 @@
+﻿@model EduTrack.Models.Billing
+
+@{
+    ViewData["Title"] = "Add Bill";
+    var students = ViewBag.Students as IEnumerable<dynamic> ?? new List<dynamic>();
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Add New Bill</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create">
+                        <div class="mb-3">
+                            <label asp-for="StudentID" class="form-label">Student</label>
+                            <select asp-for="StudentID" class="form-select" required>
+                                <option value="">Select Student</option>
+                                @foreach (var student in students)
+                                {
+                                    <option value="@student.StudentID">@student.FullName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="SchoolYear" class="form-label">School Year</label>
+                            <input asp-for="SchoolYear" class="form-control" placeholder="2025-2026" required />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="FeeType" class="form-label">Fee Type</label>
+                            <select asp-for="FeeType" class="form-select">
+                                <option value="Tuition Fee">Tuition Fee</option>
+                                <option value="Miscellaneous Fee">Miscellaneous Fee</option>
+                                <option value="Registration Fee">Registration Fee</option>
+                                <option value="Books Fee">Books Fee</option>
+                                <option value="Uniform Fee">Uniform Fee</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Amount" class="form-label">Amount</label>
+                            <input asp-for="Amount" type="number" step="0.01" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="DueDate" class="form-label">Due Date</label>
+                            <input asp-for="DueDate" type="date" class="form-control" required />
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Save Bill</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+﻿@model EduTrack.Models.Enrollment
+
+@{
+    ViewData["Title"] = "New Enrollment";
+    var students = ViewBag.Students as IEnumerable<dynamic> ?? new List<dynamic>();
+    var sections = ViewBag.Sections as IEnumerable<dynamic> ?? new List<dynamic>();
+    var classifications = ViewBag.Classifications as IEnumerable<dynamic> ?? new List<dynamic>();
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-user-plus me-2"></i>New Enrollment</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create">
+                        <div class="mb-3">
+                            <label asp-for="StudentID" class="form-label">Student</label>
+                            <select asp-for="StudentID" class="form-select" required>
+                                <option value="">Select Student</option>
+                                @foreach (var student in students)
+                                {
+                                    <option value="@student.StudentID">@student.FullName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="SectionID" class="form-label">Section</label>
+                            <select asp-for="SectionID" class="form-select" required>
+                                <option value="">Select Section</option>
+                                @foreach (var sec in sections)
+                                {
+                                    <option value="@sec.SectionID">@sec.DisplayName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="SchoolYear" class="form-label">School Year</label>
+                            <input asp-for="SchoolYear" class="form-control" placeholder="2025-2026" required />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Status" class="form-label">Status</label>
+                            <select asp-for="Status" class="form-select">
+                                <option value="Active">Active</option>
+                                <option value="Dropped">Dropped</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="ClassificationID" class="form-label">Academic Classification (Optional)</label>
+                            <select asp-for="ClassificationID" class="form-select">
+                                <option value="">-- None --</option>
+                                @foreach (var classification in classifications)
+                                {
+                                    <option value="@classification.ClassificationID">@classification.ClassificationName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Save Enrollment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Student Performance Report";
+    var students = Model as IEnumerable<dynamic> ?? new List<dynamic>();
+}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4>Student Performance Report</h4>
+        </div>
+        <div class="card-body">
+            <a asp-action="ExecutiveSummary" class="btn btn-secondary btn-sm">Back to Dashboard</a>
+            <hr />
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Student Name</th>
+                        <th>Average Grade</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (students.Any())
+                    {
+                        int rank = 1;
+                        foreach (var s in students)
+                        {
+                            <tr>
+                                <td>@rank</td>
+                                <td>@s.StudentName</td>
+                                <td>
+                                    @if (s.AverageGrade >= 90)
+                                    {
+                                        <span class="badge bg-success">@s.AverageGrade.ToString("N2")</span>
+                                    }
+                                    else if (s.AverageGrade >= 75)
+                                    {
+                                        <span class="badge bg-info">@s.AverageGrade.ToString("N2")</span>
+                                    }
+                                    else if (s.AverageGrade > 0)
+                                    {
+                                        <span class="badge bg-warning">@s.AverageGrade.ToString("N2")</span>
+                                    }
+                                    else
+                                    {
+                                        <span>No grades</span>
+                                    }
+                                </td>
+                                <td>@s.Status</td>
+                            </tr>
+                            rank++;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center">No data available</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

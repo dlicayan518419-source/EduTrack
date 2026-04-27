@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Financial Summary Report";
+    var monthlyCollections = Model as IEnumerable<dynamic> ?? new List<dynamic>();
+    var yearlyTotals = ViewBag.YearlyTotals as IEnumerable<dynamic> ?? new List<dynamic>();
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card bg-primary text-white mb-3">
+                <div class="card-body">
+                    <h5>Total Collections</h5>
+                    <h3>₱@ViewBag.TotalCollections</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-warning mb-3">
+                <div class="card-body">
+                    <h5>Total Billings</h5>
+                    <h3>₱@ViewBag.TotalBillings</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white mb-3">
+                <div class="card-body">
+                    <h5>Outstanding Balance</h5>
+                    <h3>₱@ViewBag.OutstandingBalance</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-primary text-white">
+            <h5>Monthly Collections</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Month</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in monthlyCollections)
+                    {
+                        <tr>
+                            <td>@item.Year</td>
+                            <td>@item.MonthName</td>
+                            <td>₱@item.Total.ToString("N2")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h5>Yearly Totals</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in yearlyTotals)
+                    {
+                        <tr>
+                            <td>@item.Year</td>
+                            <td>₱@item.Total.ToString("N2")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <a asp-action="ExecutiveSummary" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
